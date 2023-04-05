@@ -8,30 +8,22 @@ const todoList = () => {
   }
 
   const overdue = () => {
-    const overdueItems = all.filter(item => new Date(item.dueDate) < new Date() && !item.completed);
-    return overdueItems;
+    const now = new Date();
+    return all.filter(todo => new Date(todo.dueDate) < now && !todo.completed);
   }
 
   const dueToday = () => {
-    const dueTodayItems = all.filter(item => item.dueDate === formattedDate(new Date()) && !item.completed);
-    return dueTodayItems;
+    const today = new Date().setHours(0, 0, 0, 0);
+    return all.filter(todo => new Date(todo.dueDate).setHours(0, 0, 0, 0) === today);
   }
 
   const dueLater = () => {
-    const dueLaterItems = all.filter(item => new Date(item.dueDate) > new Date() && !item.completed);
-    return dueLaterItems;
+    const now = new Date();
+    return all.filter(todo => new Date(todo.dueDate) > now);
   }
 
   const toDisplayableList = (list) => {
-    let displayString = "";
-    for (let i = 0; i < list.length; i++) {
-      displayString += `${i + 1}. ${list[i].completed ? "[x]" : "[ ]"} ${list[i].title}`;
-      if (list[i].dueDate) {
-        displayString += ` ${list[i].dueDate}`;
-      }
-      displayString += "\n";
-    }
-    return displayString;
+    return list.map(todo => `[${todo.completed ? 'x' : ' '}] ${todo.title} ${todo.dueDate}`).join('\n');
   }
 
   return {
@@ -66,7 +58,7 @@ const tomorrow = formattedDate(
 
 todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
 todos.add({ title: 'Pay rent', dueDate: today, completed: true })
-todos.add({ title: 'Service Vehicle', dueDate: today, completed: false })
+todos.add({ title: 'Service vehicle', dueDate: today, completed: false })
 todos.add({ title: 'File taxes', dueDate: tomorrow, completed: false })
 todos.add({ title: 'Pay electric bill', dueDate: tomorrow, completed: false })
 
