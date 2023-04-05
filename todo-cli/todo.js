@@ -11,9 +11,11 @@ const todoList = () => {
     return all.filter(item => !item.completed && item.dueDate < today)
   }
 
-  const dueToday = () => {
-    return all.filter(item => !item.completed && item.dueDate === today)
-  }
+const dueToday = () => {
+  return all.filter((todoItem) => {
+    return todoItem.dueDate === today && !todoItem.completed;
+  });
+}
 
   const dueLater = () => {
     return all.filter(item => !item.completed && item.dueDate > today)
