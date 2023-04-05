@@ -1,23 +1,18 @@
-  <form id="registration-form">
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" minlength="8" required>
-    </div>
-    <div>
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob" required>
-    </div>
-    <div>
-      <label for="terms">Accept Terms:</label>
-      <input type="checkbox" id="terms" name="terms" required>
-    </div>
-    <button type="submit">Submit</button>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Page</title>
+</head>
+<body>
+  <h1>Register for a new project</h1>
+  <form action="/register" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required><br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required><br>
+    <label for="project">Project:</label>
+    <input type="text" name="project" id="project" required><br>
+    <input type="submit" value="Submit">
   </form>
+</body>
+</html>
