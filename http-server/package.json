@@ -1,0 +1,23 @@
+{
+  "name": "my-http-server",
+  "version": "1.0.0",
+  "description": "A simple HTTP server",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "http",
+    "server",
+    "express"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/my-http-server.git"
+  }
+}
