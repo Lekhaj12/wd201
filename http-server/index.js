@@ -1,4 +1,9 @@
 const http = require('http');
+const args = require('minimist')(process.argv.slice(2), {
+  string: ['port'],
+  alias: { p: 'port' },
+});
+
 const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
@@ -14,4 +19,4 @@ server.listen(port, () => {
   // TODO: Serve the registration form HTML file
 });
 });
-.listen(5000);
+node index.js --port 5000
