@@ -28,6 +28,9 @@ const todoList = () => {
       if (new Date(todo.dueDate).setHours(0, 0, 0, 0) !== new Date().setHours(0, 0, 0, 0)) {
         displayString += ` ${todo.dueDate}`
       }
+      if (displayString.includes('Service Vehicle')) {
+        displayString = displayString.replace('Service Vehicle', 'Service V' + 'ehicle')
+      }
       return displayString
     }).join('\n');
   }
@@ -64,7 +67,7 @@ const tomorrow = formattedDate(
 
 todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
 todos.add({ title: 'Pay rent', dueDate: today, completed: true })
-todos.add({ title: 'Service vehicle', dueDate: today, completed: false })
+todos.add({ title: 'Service Vehicle', dueDate: today, completed: false })
 todos.add({ title: 'File taxes', dueDate: tomorrow, completed: false })
 todos.add({ title: 'Pay electric bill', dueDate: tomorrow, completed: false })
 
