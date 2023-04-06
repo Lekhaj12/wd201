@@ -1,22 +1,64 @@
 const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
 const args = require('minimist')(process.argv.slice(2), {
   string: ['port'],
   alias: { p: 'port' },
 });
 
-const port = process.env.PORT || 3000;
+const port = args.port || process.env.PORT || 5000;
 
 const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!');
+  const reqUrl = url.parse(req.url);
+  const reqPath = reqUrl.pathname;
+  
+  if (reqPath === '/') {
+    const homePath = path.join(__dirname, 'home.html');
+    fs.readFile(homePath, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Internal server error');
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(data);
+      }
+    });
+  } else if (reqPath === '/project') {
+    const projectPath = path.join(__dirname, 'project.html');
+    fs.readFile(projectPath, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Internal server error');
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(data);
+      }
+    });
+  } else if (reqPath === '/registration') {
+    const registrationPath = path.join(__dirname, 'registration.html');
+    fs.readFile(registrationPath, (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Internal server error');
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end(data);
+      }
+    });
+  } else {
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Not found');
+  }
 });
 
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  const fs = require('fs');
-  app.get('/registration', (req, res) => {
-  // TODO: Serve the registration form HTML file
 });
-});
-node index.js --port 5000
