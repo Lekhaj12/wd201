@@ -40,25 +40,4 @@ const server = http.createServer((req, res) => {
       }
     });
   } else if (reqPath === '/registration') {
-    const registrationPath = path.join(__dirname, 'registration.html');
-    fs.readFile(registrationPath, (err, data) => {
-      if (err) {
-        res.statusCode = 500;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Internal server error');
-      } else {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        res.end(data);
-      }
-    });
-  } else {
-    res.statusCode = 404;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Not found');
-  }
-});
-
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+   
