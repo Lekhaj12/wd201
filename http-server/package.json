@@ -4,15 +4,14 @@
   "description": "A simple HTTP server",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "minimist": "^1.2.5"
   },
   "scripts": {
     "start": "node index.js"
   },
   "keywords": [
     "http",
-    "server",
-    "express"
+    "server"
   ],
   "author": "Your Name",
   "license": "MIT",
