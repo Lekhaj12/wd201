@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-  </head>
-  <body>
-    <h1>Registration Form</h1>
-    <form id="registration-form" method="post">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required><br>
+<head>
+  <title>Registration Form</title>
+</head>
+<body>
+  <form id="registration-form">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required><br>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required><br>
-      <button type="submit" id="submit-btn">Submit</button>
-    </form>
-    <script src="main.js"></script>
-  </body>
-</html>
+      <input type="password" id="password" name="password" minlength="8" required>
+    </div>
+    <div>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required>
+    </div>
+    <div>
+      <label for="terms">Accept Terms:</label>
+      <input type="checkbox" id="terms" name="terms" required>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <table id="registration-table">
+    <thead>
+     
