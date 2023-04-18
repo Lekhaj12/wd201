@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "no-console": "off",
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"]
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  }
+}
