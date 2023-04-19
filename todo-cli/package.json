@@ -1,28 +1,30 @@
 {
   "name": "todo-cli",
   "version": "1.0.0",
-  "description": "A simple CLI for managing todos",
-  "main": "todo.js",
+  "description": "A simple command-line todo list app",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
-    "format": "prettier --write .",
-    "lint": "eslint ."
+    "format": "prettier --write '**/*.js'",
+    "lint": "eslint '**/*.js'"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test && npm run format"
+      "pre-commit": "npm run lint && npm run format && npm test"
     }
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^8.0.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^28.0.0",
+    "eslint": "^8.1.0",
+    "husky": "^7.0.2",
+    "jest": "^27.4.7",
     "prettier": "^2.4.1"
   },
-  "dependencies": {},
   "eslintConfig": {
-    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+    "extends": ["eslint:recommended"],
     "rules": {
       "no-console": "off",
       "semi": ["error", "always"],
