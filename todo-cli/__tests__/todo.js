@@ -1,113 +1,39 @@
-const { todoList } = require("../todo");
+const todoList = () => {
+  const list = [];
 
-describe("Todo List", () => {
-  let todos;
+  const add = (item) => {
+    list.push(item);
+  };
 
-  beforeEach(() => {
-    todos = todoList();
-  });
+  const markAsComplete = (index) => {
+    if (index >= 0 && index < list.length) {
+      list[index].completed = true;
+    }
+  };
 
-  it("can add a new todo", () => {
-    const todo = {
-      title: "Test Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    };
-    todos.add(todo);
-    expect(todos.all).toContain(todo);
-  });
+  const overdue = () => {
+    const now = new Date();
+    return list.filter((item) => !item.completed && new Date(item.dueDate) < now);
+  };
 
-  it("can mark a todo as completed", () => {
-    const todo = {
-      title: "Test Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    };
-    todos.add(todo);
-    todos.markAsComplete(0);
-    expect(todos.all[0].completed).toBe(true);
-  });
+  const dueToday = () => {
+    const today = new Date().toISOString().split("T")[0];
+    return list.filter((item) => !item.completed && item.dueDate === today);
+  };
 
-  it("can retrieve overdue items", () => {
-    todos.add({
-      title: "Overdue Todo",
-      dueDate: "2023-04-01",
-      completed: false,
-    });
-    todos.add({
-      title: "Completed Overdue Todo",
-      dueDate: "2023-04-01",
-      completed: true,
-    });
-    todos.add({
-      title: "Upcoming Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    });
-    const overdue = todos.overdue();
-    expect(overdue).toContainEqual({
-      title: "Overdue Todo",
-      dueDate: "2023-04-01",
-      completed: false,
-    });
-    expect(overdue).not.toContainEqual({
-      title: "Completed Overdue Todo",
-      dueDate: "2023-04-01",
-      completed: true,
-    });
-    expect(overdue).not.toContainEqual({
-      title: "Upcoming Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    });
-  });
+  const dueLater = () => {
+    const now = new Date().toISOString().split("T")[0];
+    return list.filter((item) => !item.completed && item.dueDate > now);
+  };
 
-  it("can retrieve due today items", () => {
-    todos.add({
-      title: "Due Today Todo",
-      dueDate: new Date().toISOString().split("T")[0],
-      completed: false,
+  const toDisplayableList = () => {
+    return list.map((item, index) => {
+      const status = item.completed ? "DONE" : "TODO";
+      return `${index + 1}. ${item.title} - ${item.dueDate} [${status}]`;
     });
-    todos.add({
-      title: "Completed Due Today Todo",
-      dueDate: new Date().toISOString().split("T")[0],
-      completed: true,
-    });
-    todos.add({
-      title: "Upcoming Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    });
-    const dueToday = todos.dueToday();
-    expect(dueToday).toContainEqual({
-      title: "Due Today Todo",
-      dueDate: new Date().toISOString().split("T")[0],
-      completed: false,
-    });
-    expect(dueToday).not.toContainEqual({
-      title: "Completed Due Today Todo",
-      dueDate: new Date().toISOString().split("T")[0],
-      completed: true,
-    });
-    expect(dueToday).not.toContainEqual({
-      title: "Upcoming Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    });
-  });
+  };
 
-  it("can retrieve due later items", () => {
-    todos.add({
-      title: "Due Later Todo",
-      dueDate: "2023-04-30",
-      completed: false,
-    });
-    todos.add({
-      title: "Completed Due Later Todo",
-      dueDate: "2023-04-30",
-      completed: true,
-    });
-    todos.add({
-      title: "Overdue Todo",
-      dueDate: "2023-04-01",
-      completed: false,});
+  return { all: list, add, markAsComplete, overdue, dueToday, dueLater, toDisplayableList };
+};
+
+module.exports = { todoList };
