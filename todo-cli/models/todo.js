@@ -1,8 +1,8 @@
-// models/todo.js
 'use strict';
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static async addTask(params) {
       return await Todo.create(params);
     }
+
     static async showList() {
       console.log("My Todo list \n");
 
@@ -23,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
       console.log("Due Today");
       const dueTodayTasks = await Todo.dueToday();
-      dueTodayTasks.forEach(task => console.log(task.displayableString()));
+      dueTodayTasks.forEach(task => console.log(task.displayableStringWithoutDate()));
       console.log("\n");
 
       console.log("Due Later");
@@ -34,33 +35,30 @@ module.exports = (sequelize, DataTypes) => {
     static async overdue() {
       return await Todo.findAll({
         where: {
+          completed: false,
           dueDate: {
-            [Op.lt]: new Date()
+            [sequelize.Op.lt]: new Date()
           }
         }
       });
     }
 
     static async dueToday() {
-      const today = new Date();
-      today.setUTCHours(0, 0, 0, 0);
       return await Todo.findAll({
         where: {
-          dueDate: {
-            [Op.eq]: today
-          }
+          dueDate: new Date().toISOString().slice(0, 10),
+          completed: false
         }
       });
     }
 
     static async dueLater() {
-      const today = new Date();
-      today.setUTCHours(0, 0, 0, 0);
       return await Todo.findAll({
         where: {
           dueDate: {
-            [Op.gt]: today
-          }
+            [sequelize.Op.gt]: new Date().toISOString().slice(0, 10)
+          },
+          completed: false
         }
       });
     }
@@ -68,20 +66,20 @@ module.exports = (sequelize, DataTypes) => {
     static async markAsComplete(id) {
       const task = await Todo.findByPk(id);
       task.completed = true;
-      await task.save();
+      return await task.save();
     }
 
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
-      let dueDate = this.dueDate;
-      if (this.completed) {
-        dueDate = "(completed)";
-      } else if (this.dueDate.getTime() === new Date().setUTCHours(0, 0, 0, 0)) {
-        dueDate = "";
-      }
-      return `${this.id}. ${checkbox} ${this.title} ${dueDate}`;
+      return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
+    }
+
+    displayableStringWithoutDate() {
+      let checkbox = this.completed ? "[x]" : "[ ]";
+      return `${this.id}. ${checkbox} ${this.title}`;
     }
   }
+
   Todo.init({
     title: DataTypes.STRING,
     dueDate: DataTypes.DATEONLY,
@@ -90,5 +88,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Todo',
   });
+
   return Todo;
 };
