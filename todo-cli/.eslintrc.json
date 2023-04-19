@@ -1,14 +1,18 @@
 {
-  "extends": [
-    "eslint:recommended"
-  ],
-  "rules": {
-    "no-console": "off",
-    "semi": ["error", "always"],
-    "quotes": ["error", "double"]
-  },
   "env": {
     "node": true,
-    "jest": true
+    "es6": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "no-unused-vars": "warn",
+    "no-console": "off"
   }
 }
